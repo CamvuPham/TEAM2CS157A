@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 
 public class Store {
 	
@@ -8,8 +9,91 @@ public class Store {
 	/*
 	 * 
 	 * */
-	public void addFruit(){
+	public void createUser(){
 		
 	}
 	
+	/*
+	 * 
+	 * */
+	public void editUser(){
+		
+	}
+	
+	/*
+	 * */
+	public void getUser(){
+		
+	}
+	
+	/*
+	 * 
+	 * */
+	public void makeOrder(){
+		
+	}
+	
+	/*
+	 * 
+	 * */
+	public void editOrder(){
+		
+	}
+	
+	/*
+	 * */
+	public void getOrders(){
+		
+	}
+	
+	/*
+	 * 
+	 * */
+	public void addFruit(){
+		
+	}
+
+	/*
+	 * */
+	public void getListOfFruit(){
+
+	}
+	
+	/*
+	 * */
+	public void getInventory(){
+		
+	}
+	
+	/*
+	 * 
+	 * */
+	public void removeExpired(){
+		
+	}
+	
+	/*
+	 * 
+	 * */
+	public void addReview(){
+		
+	}
+	
+	/*
+	 * */
+	public void editReview(){
+		
+	}
+	
+	/*
+	 * */
+	public void getReview(){
+		
+	}
+	
+	/*
+	 * */
+	public void getStat(){
+		
+	}
 }
