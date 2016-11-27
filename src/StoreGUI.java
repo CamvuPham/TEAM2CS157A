@@ -12,12 +12,20 @@ import javax.swing.JComboBox;
 import javax.swing.JPanel;
 
 public class StoreGUI extends Frame {
+	
+	String[] listOfFruit;
+	
+	/*
+	 * Constructor
+	 * 
+	 * @param listOfFruit array of fruit to be included in drop down menu
+	 * */
+	public StoreGUI(String[] listOfFruit) {
 
-	public StoreGUI() {
-
-		String[] dummy = { "pear", "apple" };
-
-		JPanel makeOrder = makeOrderPanel(dummy);
+		this.listOfFruit = listOfFruit;
+		
+		
+		JPanel makeOrder = makeOrderPanel();
 
 		add(makeOrder);
 
@@ -25,11 +33,17 @@ public class StoreGUI extends Frame {
 		setSize(350, 700);
 		setVisible(true);
 	}
+	
+	
+	/*
+	 * Main panel for add to order menu
+	 * 
+	 * @return JPanel of main order menu
+	 * */
+	public JPanel makeOrderPanel() {
 
-	public JPanel makeOrderPanel(String[] listOfFruit) {
-
-		JPanel input = new JPanel();
-		input.setLayout(new FlowLayout());
+		JPanel panel = new JPanel();
+		panel.setLayout(new FlowLayout());
 
 		Label titleLabel = new Label("Place an order");
 
@@ -38,46 +52,122 @@ public class StoreGUI extends Frame {
 		{
 		  public void actionPerformed(ActionEvent e)
 		  {
-			  JPanel newb = orderItemPanel(listOfFruit);
-			  input.add(newb);
-			  input.revalidate();
-			  input.repaint();
+			  JPanel newb = orderItemPanel();
+			  panel.add(newb);
+			  panel.revalidate();
+			  panel.repaint();
 		  }
 		});
 		
 		JButton button = new JButton("Order");
 
 
-		input.add(titleLabel);
-		input.add(add);		
-		input.add(button);
-		input.add(orderItemPanel(listOfFruit));
+		panel.add(titleLabel);
+		panel.add(add);		
+		panel.add(button);
+		panel.add(orderItemPanel());
 
 
-		return input;
+		return panel;
 
 	}
 	
-	public JPanel orderItemPanel(String[] listOfFruit){
-		JPanel input = new JPanel();
-		input.setLayout(new FlowLayout());
+	/*
+	 * Displays a menu to add fruit to order
+	 * 
+	 * @return JPanel of add to order menu
+	 * */
+	public JPanel orderItemPanel(){
+		JPanel panel = new JPanel();
+		panel.setLayout(new FlowLayout());
 		
 		Label amountLabel = new Label("Amount: ");
 		Label fruitLabel = new Label("Fruit: ");
 		
-		TextField tfInput = new TextField(10);
-		add(tfInput);
+		TextField tfpanel = new TextField(10);
+		add(tfpanel);
 
 		
 		JComboBox<String> fruitSelection = new JComboBox<String>(listOfFruit);
 		
-		input.add(fruitLabel);
-		input.add(fruitSelection);
+		panel.add(fruitLabel);
+		panel.add(fruitSelection);
 		
-		input.add(amountLabel);
-		input.add(tfInput);
+		panel.add(amountLabel);
+		panel.add(tfpanel);
 				
-		return input;
+		return panel;
 	}
+	
+	/*
+	 * Displays the amount of fruit in stock
+	 * 
+	 * */
+	public JPanel inventoryPanel(){
+		JPanel panel = new JPanel();
+		
+		return panel;
+	}
+	
+	/*
+	 * Menu for employee types to add fruit to inventory
+	 * */
+	
+	public JPanel addFruitPanel(){
+		JPanel panel = new JPanel();
+		
+		return panel;
+	}
+	
+	/*
+	 * Menu for employee types to remove fruit from inventory
+	 * */
+	public JPanel removeFruitPanel(){
+		JPanel panel = new JPanel();
+		
+		return panel;
+	}
+	
+	/*
+	 * Leaving a review
+	 * 
+	 * 
+	 * */
+	public JPanel addRatingPanel(){
+		JPanel panel = new JPanel();
+		
+		return panel;
+	}
+	
+	/*
+	 * Edit / delete a rating
+	 * */
+	public JPanel editRatingPanel(){
+		JPanel panel = new JPanel();
+		
+		return panel;
+	}
+	
+	/*
+	 * Displays statistics of the store
+	 * 
+	 * */
+	public JPanel statPanel(){
+		JPanel panel = new JPanel();
+		
+		return panel;
+	}
+	
+	/*
+	 * Displays past order and menu to edit order
+	 * 
+	 * */
+	public JPanel pastOrderPanel(){
+		JPanel panel = new JPanel();
+		
+		return panel;
+	}
+	
+	
 
 }
