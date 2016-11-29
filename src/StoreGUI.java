@@ -9,9 +9,10 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class StoreGUI extends Frame {
+public class StoreGUI extends JFrame {
 	
 	String[] listOfFruit;
 	
@@ -31,6 +32,8 @@ public class StoreGUI extends Frame {
 
 		setTitle("Fruit Store");
 		setSize(350, 700);
+	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
 		setVisible(true);
 	}
 	
