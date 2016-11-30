@@ -42,11 +42,11 @@ public class StoreModel {
 			System.out.print(e.getMessage());
 		}
 		
-		createTables();
+		addTables();
 		
 	}
 	
-	public void createTables(){
+	public void addTables(){
 		
 		/*
 		 * User(uID, username, password, email, isEmployee)
@@ -66,6 +66,7 @@ public class StoreModel {
 		        Scanner sc = new Scanner(file);
 
 		        while (sc.hasNextLine()) {
+		        	
 		        	if(i.contains(";")){
 		        		
 		    			try {
@@ -84,11 +85,12 @@ public class StoreModel {
 		        		
 		        		
 		        		i="";
+		        		
 		        	}else{
+		        		
 			             i += sc.nextLine() + "";
 		             }
 		        }
-		        System.out.println(i);
 
 		        sc.close();
 		    } 
