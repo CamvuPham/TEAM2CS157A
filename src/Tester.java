@@ -13,8 +13,8 @@ public class Tester {
 		String[] listOfFruit = { "pear", "apple" };
 		
 		StoreGUI fruitStore = new StoreGUI(listOfFruit);
-			StoreModel test = new StoreModel(USER, PASSWORD);
-			//test.createUser();
+		StoreModel test = new StoreModel(USER, PASSWORD);
+		//test.createUser();
 		
 		
 	}

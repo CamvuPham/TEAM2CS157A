@@ -1,7 +1,10 @@
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Scanner;
 
 public class StoreModel {
 	
@@ -39,6 +42,8 @@ public class StoreModel {
 			System.out.print(e.getMessage());
 		}
 		
+		createTables();
+		
 	}
 	
 	public void createTables(){
@@ -52,23 +57,32 @@ public class StoreModel {
 		   Archive(oID, uID, timeStamp, totalPrice)
 		 * 
 		 * */
-		
-		try {
+		   File file = new File("fruitStore.sql");
+		   
+		   String i = "";
+		   
+		    try {
+
+		        Scanner sc = new Scanner(file);
+
+		        while (sc.hasNextLine()) {
+		             i += "" + sc.nextLine();
+		        }
+		        sc.close();
+		        
+		    } 
+		    catch (FileNotFoundException e) {
+		        e.printStackTrace();
+		    }
 		    
-			//Drop FruitStore DB 
-		    String sql = "";
-		    stmt.executeUpdate(sql);
-		    
-		    //Create FruitStore DB
-		    sql = "CREATE DATABASE FRUITSTORE";
-		    stmt.executeUpdate(sql);
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			System.out.print(e.getMessage());
-		}
-		
+			try {
+				
+			    stmt.executeUpdate(i);
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+				System.out.print(e.getMessage());
+			}
 	}
 	
 	/*
