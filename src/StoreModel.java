@@ -66,23 +66,36 @@ public class StoreModel {
 		        Scanner sc = new Scanner(file);
 
 		        while (sc.hasNextLine()) {
-		             i += "" + sc.nextLine();
+		        	if(i.contains(";")){
+		        		
+		    			try {
+		    				
+		    			    String sql = "USE FRUITSTORE;";
+		    			    stmt.executeUpdate(sql);
+		    				
+		    			    stmt.executeUpdate(i);
+		    				
+		    			} catch (SQLException e) {
+		    				
+		    				e.printStackTrace();
+		    				System.out.print(e.getMessage());
+		    				
+		    			}
+		        		
+		        		
+		        		i="";
+		        	}else{
+			             i += sc.nextLine() + "";
+		             }
 		        }
+		        System.out.println(i);
+
 		        sc.close();
-		        
 		    } 
 		    catch (FileNotFoundException e) {
 		        e.printStackTrace();
 		    }
 		    
-			try {
-				
-			    stmt.executeUpdate(i);
-				
-			} catch (SQLException e) {
-				e.printStackTrace();
-				System.out.print(e.getMessage());
-			}
 	}
 	
 	/*
