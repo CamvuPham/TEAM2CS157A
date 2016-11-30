@@ -13,6 +13,7 @@ public class Tester {
 		String[] listOfFruit = { "pear", "apple" };
 		
 		StoreGUI fruitStore = new StoreGUI(listOfFruit);
+
 			StoreModel test = new StoreModel(USER, PASSWORD);
 			
 			//testing create a user, will check if user already exists in database and print to console
@@ -22,7 +23,8 @@ public class Tester {
 			System.out.println(test.getUser("bridgegade"));
 			
 			//testing makeOrder
-			test.makeOrder(7, 400);
+			test.makeOrder(1, 400);
+
 		
 	}
 }

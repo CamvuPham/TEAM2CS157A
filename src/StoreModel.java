@@ -1,15 +1,19 @@
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.sql.*;
+import java.sql.Statement;
+import java.util.Scanner;
 
 public class StoreModel {
 	
 	private Connection conn;
 	private Statement stmt;
-	private PreparedStatement preparedStatement = null;
+	private PreparedStatement preparedStatement;
 	public StoreModel(String USER, String PASS){
 		
 		try {
@@ -18,7 +22,7 @@ public class StoreModel {
 	        System.out.println(e.getMessage());
 	    }
 		
-		String URL = "jdbc:mysql://localhost:3306/FruitStore";
+		String URL = "jdbc:mysql://localhost:3306/";
 		
 		try {
 			
@@ -26,7 +30,7 @@ public class StoreModel {
 			conn = DriverManager.getConnection(URL, USER, PASS);
 			
 		    stmt = conn.createStatement();
-		    
+		    preparedStatement = null;
 			
 			
 		} catch (SQLException e) {
@@ -35,9 +39,11 @@ public class StoreModel {
 			System.out.print(e.getMessage());
 		}
 		
+		addTables();
+		
 	}
 	
-	public void createTables(){
+	public void addTables(){
 		
 		/*
 		 * User(uID, username, password, email, isEmployee)
@@ -48,23 +54,54 @@ public class StoreModel {
 		   Archive(oID, uID, timeStamp, totalPrice)
 		 * 
 		 * */
+			try{
+				stmt.executeUpdate("CREATE DATABASE IF NOT EXISTS FRUITSTORE");
+			}
+			catch(SQLException e){
+				e.printStackTrace();
+			}
 		
-		try {
+		   File file = new File("fruitStore.sql");
+		   
+		   String i = "";
+		   
+		    try {
+
+		        Scanner sc = new Scanner(file);
+
+		        while (sc.hasNextLine()) {
+		        	
+		        	if(i.contains(";")){
+		        		
+		    			try {
+		    				
+		    			    String sql = "USE FRUITSTORE;";
+		    			    stmt.executeUpdate(sql);
+		    				
+		    			    stmt.executeUpdate(i);
+		    				
+		    			} catch (SQLException e) {
+		    				
+		    				e.printStackTrace();
+		    				System.out.print(e.getMessage());
+		    				
+		    			}
+		        		
+		        		
+		        		i="";
+		        		
+		        	}else{
+		        		
+			             i += sc.nextLine() + "";
+		             }
+		        }
+
+		        sc.close();
+		    } 
+		    catch (FileNotFoundException e) {
+		        e.printStackTrace();
+		    }
 		    
-			//Drop FruitStore DB 
-		    String sql = "";
-		    stmt.executeUpdate(sql);
-		    
-		    //Create FruitStore DB
-		    sql = "CREATE DATABASE FRUITSTORE";
-		    stmt.executeUpdate(sql);
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			System.out.print(e.getMessage());
-		}
-		
 	}
 	
 	/**
