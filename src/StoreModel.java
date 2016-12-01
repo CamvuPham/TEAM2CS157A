@@ -390,7 +390,7 @@ public class StoreModel {
 	 * */
 	public void addInventory(int fID, String expirationDate, int amount){
 		
-		String sql = "SELECT * FROM Inventory";
+		String sql = "SELECT * FROM Inventory WHERE fID = ? AND expirationDate = ?";
 		ResultSet result = null;
 		try {
 			String s = "SET FOREIGN_KEY_CHECKS=0";
@@ -398,8 +398,8 @@ public class StoreModel {
 			preparedStatement.executeQuery();
 
 			preparedStatement = conn.prepareStatement(sql);
-			//preparedStatement.setInt(1, fID);
-			//preparedStatement.setString(2, expirationDate);
+			preparedStatement.setInt(1, fID);
+			preparedStatement.setString(2, expirationDate);
 			//preparedStatement.setInt(3, amount);
 
 			result = preparedStatement.executeQuery();
