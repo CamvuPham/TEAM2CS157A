@@ -7,7 +7,9 @@ import java.awt.Panel;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -16,22 +18,57 @@ import javax.swing.JPanel;
 public class StoreGUI extends JFrame {
 	
 	String[] listOfFruit;
+	ArrayList inventory;
+	
+	//Create User Panel
+	TextField tfuCreateUser;
+	TextField tfeCreateUser;
+	TextField tfpCreateUser;
+	JButton submitCreateUser;
+	
+	//Order Item Panel
+	TextField tforderItem;
+	
+	JButton addButton;
+	
+	//Add Fruit Panel
+	JButton submitaddFruit;
+	TextField tfnaddFruit;
+	TextField tfpaddFruit;
+	
+	//Add Inv Panel
+	TextField tfnaddInv;
+	TextField tfeaddInv;
+	TextField tfaaddInv;
+	JButton submitaddInv;
+
 	
 	/*
 	 * Constructor
 	 * 
 	 * @param listOfFruit array of fruit to be included in drop down menu
 	 * */
-	public StoreGUI(String[] listOfFruit) {
-
-		this.listOfFruit = listOfFruit;
+	public StoreGUI(ArrayList inventory, String[] listOfFruit) {
 		
+		this.listOfFruit = listOfFruit;
+		this.inventory = inventory;
+		
+		setLayout(new FlowLayout());
 		
 		//JPanel makeOrder = makeOrderPanel();
 		//add(makeOrder);
 		
 		JPanel createUser = createUserPanel();
 		add(createUser);
+		
+		JPanel inv = inventoryPanel(inventory);
+		add(inv);
+		
+		JPanel addFruit = addFruitPanel();
+		add(addFruit);
+		
+		JPanel addInv = addInventoryPanel();
+		add(addInv);
 		
 		setTitle("Fruit Store");
 		setSize(350, 700);
@@ -53,23 +90,13 @@ public class StoreGUI extends JFrame {
 
 		Label titleLabel = new Label("Place an order");
 
-		JButton add = new JButton("+");
-		add.addActionListener(new ActionListener()
-		{
-		  public void actionPerformed(ActionEvent e)
-		  {
-			  JPanel newb = orderItemPanel();
-			  panel.add(newb);
-			  panel.revalidate();
-			  panel.repaint();
-		  }
-		});
+		this.addButton= new JButton("+");
 		
 		JButton button = new JButton("Order");
 
 
 		panel.add(titleLabel);
-		panel.add(add);		
+		panel.add(addButton);		
 		panel.add(button);
 		panel.add(orderItemPanel());
 
@@ -84,15 +111,15 @@ public class StoreGUI extends JFrame {
 	 * @return JPanel of add to order menu
 	 * */
 	public JPanel orderItemPanel(){
+				
 		JPanel panel = new JPanel();
 		panel.setLayout(new FlowLayout());
 		
 		Label amountLabel = new Label("Amount: ");
 		Label fruitLabel = new Label("Fruit: ");
 		
-		TextField tfpanel = new TextField(10);
-		add(tfpanel);
-
+		this.tforderItem = new TextField(10);
+		add(tforderItem);
 		
 		JComboBox<String> fruitSelection = new JComboBox<String>(listOfFruit);
 		
@@ -100,7 +127,7 @@ public class StoreGUI extends JFrame {
 		panel.add(fruitSelection);
 		
 		panel.add(amountLabel);
-		panel.add(tfpanel);
+		panel.add(tforderItem);
 				
 		return panel;
 	}
@@ -109,14 +136,51 @@ public class StoreGUI extends JFrame {
 	 * Displays the amount of fruit in stock
 	 * 
 	 * */
-	public JPanel inventoryPanel(){
+	public JPanel inventoryPanel(ArrayList inventory){
 		JPanel panel = new JPanel();
+		
+		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+		
+		for(int i = 0; inventory.size() > i; i++){
+			panel.add(new Label(inventory.get(i).toString()));
+		}
+		
+		return panel;
+	}
+	
+	public JPanel addInventoryPanel(){
+		JPanel panel = new JPanel();
+		
+		panel.setLayout(new GridLayout(3,2));
+		
+		Label nameLabel = new Label("Fruit name: ");
+		Label expLabel = new Label("Expiration Date: ");
+		Label amountLabel = new Label("Amount: ");
+
+		
+		this.tfnaddInv = new TextField(10);
+		this.tfeaddInv = new TextField(10);
+		this.tfaaddInv = new TextField(10);
+
+
+		panel.add(nameLabel);
+		panel.add(tfnaddInv);
+
+		panel.add(expLabel);
+		panel.add(tfeaddInv);
+		
+		panel.add(amountLabel);
+		panel.add(tfaaddInv);
+		
+		submitaddInv = new JButton("Submit");
+		
+		panel.add(submitaddInv);
 		
 		return panel;
 	}
 	
 	/*
-	 * Menu for employee types to add fruit to inventory
+	 * Menu for employee types to add fruit types of fruit
 	 * */
 	
 	public JPanel addFruitPanel(){
@@ -128,18 +192,18 @@ public class StoreGUI extends JFrame {
 		Label nameLabel = new Label("Fruit name: ");
 		Label priceLabel = new Label("Price: ");
 		
-		TextField tfpaneln = new TextField(10);
-		TextField tfpanelp = new TextField(10);
+		this.tfnaddFruit = new TextField(10);
+		this.tfpaddFruit = new TextField(10);
 
 		panel.add(nameLabel);
-		panel.add(tfpaneln);
+		panel.add(tfnaddFruit);
 
 		panel.add(priceLabel);
-		panel.add(tfpanelp);
+		panel.add(tfpaddFruit);
 		
-		JButton submit = new JButton("Submit");
+		submitaddFruit = new JButton("Submit");
 		
-		panel.add(submit);
+		panel.add(submitaddFruit);
 		
 		return panel;
 	}
@@ -211,29 +275,22 @@ public class StoreGUI extends JFrame {
 		Label emailLabel = new Label("Email: ");
 		Label passLabel = new Label("Password: ");
 		
-		TextField tfpanelu = new TextField(10);
-		TextField tfpanele = new TextField(10);
-		TextField tfpanelp = new TextField(10);
+		this.tfuCreateUser = new TextField(10);
+		this.tfeCreateUser = new TextField(10);
+		this.tfpCreateUser = new TextField(10);
 
 		panel.add(userLabel);
-		panel.add(tfpanelu);
+		panel.add(tfuCreateUser);
 
 		panel.add(emailLabel);
-		panel.add(tfpanele);
+		panel.add(tfeCreateUser);
 
 		panel.add(passLabel);
-		panel.add(tfpanelp);
+		panel.add(tfpCreateUser);
 		
-		JButton submit = new JButton("Submit");
-		submit.addActionListener(new ActionListener()
-		{
-		  public void actionPerformed(ActionEvent e)
-		  {
-			  System.out.println(tfpanelu.getText());
-		  }
-		});
+		this.submitCreateUser = new JButton("Submit");
 		
-		panel.add(submit);
+		panel.add(submitCreateUser);
 
 		return panel;
 

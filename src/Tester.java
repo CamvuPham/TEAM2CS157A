@@ -1,6 +1,8 @@
 import java.awt.Dimension;
 import java.sql.SQLException;
 
+import javax.management.modelmbean.ModelMBean;
+
 public class Tester {
 	
 	//Credentials for Database
@@ -9,11 +11,7 @@ public class Tester {
 	
 	
 	public static void main(String args[]){
-		
-		String[] listOfFruit = { "pear", "apple" };
-		
-		StoreGUI fruitStore = new StoreGUI(listOfFruit);
-
+				
 			StoreModel test = new StoreModel(USER, PASSWORD);
 			
 			//testing create a user, will check if user already exists in database and print to console
@@ -28,13 +26,21 @@ public class Tester {
 			test.addFruit("grape", 100);
 			test.addFruit("bananna", 500);
 			
+			System.out.println(test.getListOfFruit());
+			
 			test.addInventory(0, "2003-12-31", 10);
+			test.addInventory(1, "2006-12-31", 10);
+
 			System.out.println(test.getInventory());
 
 			test.addInventory(0, "2003-12-31", 50);
 			
 			
 			System.out.println(test.getInventory());
+			
+			String[] dummy = {"apple"};
+			StoreGUI fruitStoreGUI = new StoreGUI(test.getInventory(),dummy);
+			Store fruitStore = new Store(fruitStoreGUI, test);
 		
 	}
 }
