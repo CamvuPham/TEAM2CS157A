@@ -5,7 +5,7 @@ public class Tester {
 	
 	//Credentials for Database
 	public static final String USER = "root";
-	public static final String PASSWORD = "!@)59380";
+	public static final String PASSWORD = "";
 	
 	
 	public static void main(String args[]){

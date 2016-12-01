@@ -3,9 +3,14 @@ import java.sql.* ;  // for standard JDBC programs
 import java.math.* ; // for BigDecimal and BigInteger support
 
 public class Store {
+	
+	StoreGUI view;
+	StoreModel model;
+	
+	public Store(StoreGUI view, StoreModel model){
 		
-	public Store(){
-		
+		this.view = view;
+		this.model = model;
 
 	}
 	

@@ -1,6 +1,7 @@
 import java.awt.Button;
 import java.awt.FlowLayout;
 import java.awt.Frame;
+import java.awt.GridLayout;
 import java.awt.Label;
 import java.awt.Panel;
 import java.awt.TextField;
@@ -26,10 +27,12 @@ public class StoreGUI extends JFrame {
 		this.listOfFruit = listOfFruit;
 		
 		
-		JPanel makeOrder = makeOrderPanel();
-
-		add(makeOrder);
-
+		//JPanel makeOrder = makeOrderPanel();
+		//add(makeOrder);
+		
+		JPanel createUser = createUserPanel();
+		add(createUser);
+		
 		setTitle("Fruit Store");
 		setSize(350, 700);
 	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -117,7 +120,26 @@ public class StoreGUI extends JFrame {
 	 * */
 	
 	public JPanel addFruitPanel(){
+		
 		JPanel panel = new JPanel();
+		
+		panel.setLayout(new GridLayout(3,2));
+		
+		Label nameLabel = new Label("Fruit name: ");
+		Label priceLabel = new Label("Price: ");
+		
+		TextField tfpaneln = new TextField(10);
+		TextField tfpanelp = new TextField(10);
+
+		panel.add(nameLabel);
+		panel.add(tfpaneln);
+
+		panel.add(priceLabel);
+		panel.add(tfpanelp);
+		
+		JButton submit = new JButton("Submit");
+		
+		panel.add(submit);
 		
 		return panel;
 	}
@@ -127,6 +149,11 @@ public class StoreGUI extends JFrame {
 	 * */
 	public JPanel removeFruitPanel(){
 		JPanel panel = new JPanel();
+		
+		JComboBox<String> fruitSelection = new JComboBox<String>(listOfFruit);
+		
+		JButton remove = new JButton("Remove");
+		panel.add(remove);
 		
 		return panel;
 	}
@@ -171,6 +198,46 @@ public class StoreGUI extends JFrame {
 		return panel;
 	}
 	
+	/*
+	 * 
+	 * */
+	public JPanel createUserPanel(){
+		
+		JPanel panel = new JPanel();
+		
+		panel.setLayout(new GridLayout(4,2));
+		
+		Label userLabel = new Label("Username: ");
+		Label emailLabel = new Label("Email: ");
+		Label passLabel = new Label("Password: ");
+		
+		TextField tfpanelu = new TextField(10);
+		TextField tfpanele = new TextField(10);
+		TextField tfpanelp = new TextField(10);
+
+		panel.add(userLabel);
+		panel.add(tfpanelu);
+
+		panel.add(emailLabel);
+		panel.add(tfpanele);
+
+		panel.add(passLabel);
+		panel.add(tfpanelp);
+		
+		JButton submit = new JButton("Submit");
+		submit.addActionListener(new ActionListener()
+		{
+		  public void actionPerformed(ActionEvent e)
+		  {
+			  System.out.println(tfpanelu.getText());
+		  }
+		});
+		
+		panel.add(submit);
+
+		return panel;
+
+	}
 	
 
 }
