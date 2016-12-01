@@ -326,7 +326,7 @@ public class StoreModel {
 			if (!result.next()) {
 				// ResultSet is empty
 
-				sql = "INSERT INTO Fruit(name, price) VALUES(?,?,?)";
+				sql = "INSERT INTO Fruit(name, price) VALUES(?,?)";
 
 				preparedStatement = conn.prepareStatement(sql);
 				preparedStatement.setString(1, name);
@@ -345,7 +345,7 @@ public class StoreModel {
 
 	/*
 	 * */
-	public void getListOfFruit() {
+	public ArrayList getListOfFruit() {
 		
 		String sql = "SELECT name FROM Fruit";
 
@@ -360,6 +360,25 @@ public class StoreModel {
 			e1.printStackTrace();
 		}
 		
+		// code to retrieve an array of rows that contain maps to each attribute
+		ArrayList<HashMap> listResult = new ArrayList<>();
+
+		try {
+
+			ResultSetMetaData md = result.getMetaData();
+			int columns = md.getColumnCount();
+
+			while (result.next()) {
+				HashMap row = new HashMap(columns);
+				for (int i = 1; i <= columns; ++i) {
+					row.put(md.getColumnName(i), result.getObject(i));
+				}
+				listResult.add(row);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return listResult;
 
 	}
 

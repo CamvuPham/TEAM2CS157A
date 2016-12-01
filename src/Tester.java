@@ -24,7 +24,11 @@ public class Tester {
 			
 			//testing makeOrder
 			test.makeOrder(1, 400);
+			
+			test.addFruit("grape", 100);
+			test.addFruit("bananna", 500);
 
+			System.out.println(test.getListOfFruit());
 		
 	}
 }
