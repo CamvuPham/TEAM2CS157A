@@ -46,14 +46,18 @@ public class StoreModel {
 	public void addTables() {
 
 		/*
-		 * User(uID, username, password, email, isEmployee) Fruit (fID, name,
-		 * price) Inventory(iID, fID, timeStamp, expirationDate, amount) Order
-		 * (oID, uID, timeStamp, totalPrice, updatedAt) OrderItem (oiID, oID,
-		 * fID, amount) Archive(oID, uID, timeStamp, totalPrice)
+		 * User(uID, username, password, email, isEmployee) 
+		 * Fruit (fID, name, price) 
+		 * Inventory(iID, fID, timeStamp, expirationDate, amount)
+		 *  Order (oID, uID, timeStamp, totalPrice, updatedAt) 
+		 *  OrderItem (oiID, oID, fID, amount) 
+		 *  Archive(oID, uID, timeStamp, totalPrice)
 		 * 
 		 */
 		try {
 			stmt.executeUpdate("CREATE DATABASE IF NOT EXISTS FRUITSTORE");
+			String sql = "USE FRUITSTORE;";
+			stmt.executeUpdate(sql);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -71,9 +75,6 @@ public class StoreModel {
 				if (i.contains(";")) {
 
 					try {
-
-						String sql = "USE FRUITSTORE;";
-						stmt.executeUpdate(sql);
 
 						stmt.executeUpdate(i);
 
@@ -367,7 +368,9 @@ public class StoreModel {
 
 			ResultSetMetaData md = result.getMetaData();
 			int columns = md.getColumnCount();
-
+			
+			int count = 0;
+			
 			while (result.next()) {
 				HashMap row = new HashMap(columns);
 				for (int i = 1; i <= columns; ++i) {
@@ -381,10 +384,64 @@ public class StoreModel {
 		return listResult;
 
 	}
+	
+	/*
+	 * 
+	 * */
+	public void addInventory(int fID, String expirationDate, int amount){
+		
+		String sql = "SELECT * FROM Inventory";
+		ResultSet result = null;
+		try {
+			String s = "SET FOREIGN_KEY_CHECKS=0";
+			preparedStatement = conn.prepareStatement(s);
+			preparedStatement.executeQuery();
+
+			preparedStatement = conn.prepareStatement(sql);
+			//preparedStatement.setInt(1, fID);
+			//preparedStatement.setString(2, expirationDate);
+			//preparedStatement.setInt(3, amount);
+
+			result = preparedStatement.executeQuery();
+
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		try {
+			if (!result.next()) {
+				// ResultSet is empty
+
+				sql = "INSERT INTO Inventory(fID, expirationDate, amount) VALUES(?,?,?)";
+
+				preparedStatement = conn.prepareStatement(sql);
+				preparedStatement.setInt(1, fID);
+				preparedStatement.setString(2, expirationDate);
+				preparedStatement.setInt(3, amount);
+				preparedStatement.executeUpdate();
+
+
+			} else {
+				
+				sql = "UPDATE Inventory SET amount = amount + ? WHERE fID = ? and expirationDate = ?";
+				
+				preparedStatement = conn.prepareStatement(sql);
+				preparedStatement.setInt(1, amount);
+				preparedStatement.setInt(2, fID);
+				preparedStatement.setString(3, expirationDate);
+				preparedStatement.executeUpdate();
+
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	/*
 	 * */
-	public void getInventory() {
+	public ArrayList getInventory() {
 
 		String sql = "SELECT * FROM Inventory";
 
@@ -399,6 +456,28 @@ public class StoreModel {
 			e1.printStackTrace();
 		}
 		
+		// code to retrieve an array of rows that contain maps to each attribute
+		ArrayList<HashMap> listResult = new ArrayList<>();
+
+		try {
+
+			ResultSetMetaData md = result.getMetaData();
+			int columns = md.getColumnCount();
+			
+			int count = 0;
+			
+			while (result.next()) {
+				HashMap row = new HashMap(columns);
+				for (int i = 1; i <= columns; ++i) {
+					row.put(md.getColumnName(i), result.getObject(i));
+				}
+				listResult.add(row);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return listResult;
 	}
 
 	/*
