@@ -484,9 +484,52 @@ public class StoreModel {
 	 * 
 	 * */
 	public void removeExpired() {
-
+		String sql = "SELECT * FROM Inventory WHERE expirationDate > NOW() ";
+		ResultSet result = null;
+		try {
+			String s = "SET FOREIGN_KEY_CHECKS=0";
+			preparedStatement = conn.prepareStatement(s);
+			preparedStatement.executeQuery();
+			preparedStatement = conn.prepareStatement(sql);
+			result = preparedStatement.executeQuery();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 	}
+	
+	/*
+	 * 
+	 * */
+	public ArrayList getExpired() { // reuse ArrayList getInventory() code
 
+		String sql = "SELECT * FROM Inventory WHERE expirationDate > NOW() ";
+		ResultSet result = null;
+		try {
+			preparedStatement = conn.prepareStatement(sql);
+			result = preparedStatement.executeQuery();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		// code to retrieve an array of rows that contain maps to each attribute
+		ArrayList<HashMap> listResult = new ArrayList<>();
+		try {
+			ResultSetMetaData md = result.getMetaData();
+			int columns = md.getColumnCount();
+	  		int count = 0;
+			while (result.next()) {
+				HashMap row = new HashMap(columns);
+				for (int i = 1; i <= columns; ++i) {
+					row.put(md.getColumnName(i), result.getObject(i));
+				}
+				listResult.add(row);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return listResult;
+	}
 	/*
 	 * 
 	 * */
