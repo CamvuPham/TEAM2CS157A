@@ -14,7 +14,7 @@ public class CreateUser extends JPanel {
 	public JButton btnCreate;
 	private JTextField email;
 	private JTextField uName;
-    private JTextField password;
+        private JTextField password;
 
 	public CreateUser() {
             
@@ -30,7 +30,7 @@ public class CreateUser extends JPanel {
 		gbc_lblNewUser.gridy = 1;
 		add(lblNewUser, gbc_lblNewUser);
 		
-		JLabel lblName = new JLabel("First Name");
+		JLabel lblName = new JLabel("Name");
 		GridBagConstraints gbc_lblName = new GridBagConstraints();
 		gbc_lblName.insets = new Insets(0, 0, 3, 3);
 		gbc_lblName.gridx = 2;
@@ -62,7 +62,7 @@ public class CreateUser extends JPanel {
 		add(email, gbc_email);
 		email.setColumns(10);
                 
-        JLabel lblPassword = new JLabel("Password");
+                JLabel lblPassword = new JLabel("Password");
 		GridBagConstraints gbc_lblPassword = new GridBagConstraints();
 		gbc_lblPassword.insets = new Insets(0, 0, 3, 3);
 		gbc_lblPassword.gridx = 2;
