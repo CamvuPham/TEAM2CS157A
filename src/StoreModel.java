@@ -484,7 +484,7 @@ public class StoreModel {
 	 * 
 	 * */
 	public void removeExpired() {
-		String sql = "SELECT * FROM Inventory WHERE expirationDate > NOW() ";
+		String sql = "DELETE FROM Inventory WHERE expirationDate > NOW() ";
 		ResultSet result = null;
 		try {
 			String s = "SET FOREIGN_KEY_CHECKS=0";
