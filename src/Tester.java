@@ -1,7 +1,9 @@
 import java.awt.Dimension;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.management.modelmbean.ModelMBean;
+import javax.swing.SwingUtilities;
 
 public class Tester {
 	
@@ -11,7 +13,6 @@ public class Tester {
 	
 	
 	public static void main(String args[]){
-				
 			StoreModel test = new StoreModel(USER, PASSWORD);
 			
 			//testing create a user, will check if user already exists in database and print to console
@@ -26,21 +27,12 @@ public class Tester {
 			test.addFruit("grape", 100);
 			test.addFruit("bananna", 500);
 			
-			System.out.println(test.getListOfFruit());
-			
-			test.addInventory(0, "2003-12-31", 10);
-			test.addInventory(1, "2006-12-31", 10);
+			ArrayList listOfFruit = test.getListOfFruit();
+			System.out.println(listOfFruit);
 
-			System.out.println(test.getInventory());
-
-			test.addInventory(0, "2003-12-31", 50);
-			
-			
-			System.out.println(test.getInventory());
 			
 			String[] dummy = {"apple"};
-			StoreGUI fruitStoreGUI = new StoreGUI(test.getInventory(),dummy);
+			StoreGUI fruitStoreGUI = new StoreGUI(test.getInventory(), test.getListOfFruit());
 			Store fruitStore = new Store(fruitStoreGUI, test);
-		
 	}
 }

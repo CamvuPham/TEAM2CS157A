@@ -92,7 +92,7 @@ public class Login extends JPanel {
 	}
         
         public void login(Controller cont) {
-            cont.login(login.getText(), password.getText());
+   //         cont.login(login.getText(), password.getText());
         }
 	
         public void setFalseCred() {

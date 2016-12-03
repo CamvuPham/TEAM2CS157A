@@ -3,8 +3,8 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 
 public class Controller {
-    
-    StoreModel model = new StoreModel();
+   
+   StoreModel model = new StoreModel();
     
     public void createUser(String username, String password, String email) {
         model.createUser(username, password, email);
@@ -41,4 +41,5 @@ public class Controller {
     }
     
     // ...
+ 
 }

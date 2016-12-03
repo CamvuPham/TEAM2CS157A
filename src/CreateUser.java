@@ -95,7 +95,7 @@ public class CreateUser extends JPanel {
 	}
         
         public void createUser(Controller cont) {
-            cont.createUser(uName.getText(), email.getText(), password.getText());
+           cont.createUser(uName.getText(), email.getText(), password.getText());
         }
 
 }

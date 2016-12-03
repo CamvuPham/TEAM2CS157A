@@ -24,6 +24,7 @@ public class Store {
 				  createUser();
 			  }
 		});
+
 		
 		view.submitaddFruit.addActionListener(new ActionListener()
 		{
@@ -100,7 +101,7 @@ public class Store {
 		int price = Integer.parseInt(view.tfpaddFruit.getText());
 		
 		model.addFruit(name, price);
-		
+		view.updateValues(model.getListOfFruit(), model.getInventory());
 		System.out.println(model.getListOfFruit());
 		
 	}
@@ -151,12 +152,15 @@ public class Store {
 	
 	/**/
 	public void addInventory(){
-		String name = view.tfnaddInv.getText();
+		
+		String name = view.fruitSelectionaddInv.getSelectedItem().toString();
 		String expirationDate = view.tfeaddInv.getText();
 		int amount = Integer.parseInt(view.tfaaddInv.getText());
 		
 		model.addInventory(0, expirationDate, amount);
-		
+		view.updateValues(model.getListOfFruit(), model.getInventory());
 		System.out.println(model.getInventory());
+		System.out.println(name);
 	}
+	
 }
