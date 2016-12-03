@@ -31,7 +31,7 @@ public class Tester {
 			System.out.println(listOfFruit);
 
 			
-			String[] dummy = {"apple"};
+			//String[] dummy = {"apple"};
 			StoreGUI fruitStoreGUI = new StoreGUI(test.getInventory(), test.getListOfFruit());
 			Store fruitStore = new Store(fruitStoreGUI, test);
 	}
