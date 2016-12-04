@@ -17,6 +17,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class StoreGUI extends JFrame {
@@ -24,7 +25,7 @@ public class StoreGUI extends JFrame {
 	String[] listOfFruit;
 	ArrayList inventory;
 
-	ArrayList<JPanel> panels;
+	HashMap<String,JPanel> panels;
 	// Login User Panel
 	TextField tfuLoginUser;
 	TextField tfpLoginUser;
@@ -53,13 +54,19 @@ public class StoreGUI extends JFrame {
 	JButton submitaddInv;
 	JComboBox<String> fruitSelectionaddInv;
 
+	//left and right panels
+	JPanel left = new JPanel();
+	JPanel right = new JPanel();
+	
+	//inventory
+	JLabel inv;
 	/*
 	 * Constructor
 	 * 
 	 * @param listOfFruit array of fruit to be included in drop down menu
 	 */
 	public StoreGUI(ArrayList inventory, ArrayList listOfFruit) {
-		
+		panels = new HashMap<>();
 		//this.listOfFruit = toStringArray(listOfFruit);
 		String[] listOfFruitStore = new String[listOfFruit.size()];
 		for(int i = 0; i<listOfFruit.size();i++){
@@ -73,8 +80,7 @@ public class StoreGUI extends JFrame {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		frame.setLayout(new FlowLayout());
-		JPanel left = new JPanel();
-		JPanel right = new JPanel();
+		
 		
 		left.setLayout(new GridLayout(4,4));
 		//JPanel makeOrder = makeOrderPanel();
@@ -83,13 +89,19 @@ public class StoreGUI extends JFrame {
 		JPanel createUser = createUserPanel();
 		left.add(createUser);
 		left.add(createLoginPanel());
-		JPanel inv = inventoryPanel(inventory);
+		inv = new JLabel("testing");
+		updateInventory();
 		right.add(inv);
 		JPanel addFruit = addFruitPanel();
 		left.add(addFruit);
 		JPanel addInv = addInventoryPanel();
 		left.add(addInv);
 		
+		panels.put("createUser",createUser);
+		//panels.put("inv",inv);
+		panels.put("addFruit",addFruit);
+		panels.put("addInv",addInv);
+
 		
 		frame.add(left);
 		frame.add(right);
@@ -183,18 +195,26 @@ public class StoreGUI extends JFrame {
 	 * Displays the amount of fruit in stock
 	 * 
 	 */
-	public JPanel inventoryPanel(ArrayList inventory) {
-		JPanel panel = new JPanel();
-		panel.setBorder(BorderFactory.createBevelBorder(0));
-		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-		Label amountLabel = new Label("Inventory");
+	//public JPanel inventoryPanel() {
+		//JPanel panel = new JPanel();
+		//panel.setBorder(BorderFactory.createBevelBorder(0));
+		//panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+		//Label amountLabel = new Label("Inventory");
+		//for (int i = 0; inventory.size() > i; i++) {
+		//	panel.add(new Label(inventory.get(i).toString()));
+		//}
+
+	//}
+	public void updateInventory(){
+		String text = "<html>";
 		for (int i = 0; inventory.size() > i; i++) {
-			panel.add(new Label(inventory.get(i).toString()));
+			text = text +"<br>"+inventory.get(i).toString();
 		}
-
-		return panel;
+		text = text +"</html>";
+		System.out.println(text);
+		inv.setText(text);
 	}
-
+	
 	public JPanel addInventoryPanel() {
 		JPanel panel = new JPanel();
 

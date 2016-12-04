@@ -184,6 +184,8 @@ public class Store {
 		
 		model.addInventory(model.getFruit(name), expirationDate, amount);
 		view.updateValues(model.getListOfFruit(), model.getInventory());
+		view.updateInventory();
+		
 		System.out.println(model.getInventory());
 		System.out.println(name);
 	}
