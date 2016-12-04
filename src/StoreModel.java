@@ -608,5 +608,46 @@ public class StoreModel {
 			e.printStackTrace();
 		}
 	}
+	/**
+	 * takes in a fruit name and returns an int that represents its fID
+	 * @param fruitName
+	 * @return fID
+	 */
+	public int getFruit(String fruitName){
+		String sql = "SELECT * FROM Fruit WHERE Name = ?";
+		ResultSet result = null;
 
+		try {
+
+			preparedStatement = conn.prepareStatement(sql);
+			preparedStatement.setString(1, fruitName);
+
+			result = preparedStatement.executeQuery();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		// code to retrieve an array of rows that contain maps to each attribute
+		ArrayList<HashMap> listResult = new ArrayList<>();
+
+		try {
+
+			ResultSetMetaData md = result.getMetaData();
+			int columns = md.getColumnCount();
+
+			while (result.next()) {
+				HashMap row = new HashMap(columns);
+				for (int i = 1; i <= columns; ++i) {
+					row.put(md.getColumnName(i), result.getObject(i));
+				}
+				listResult.add(row);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return Integer.parseInt((String) listResult.get(0).get("fID"));
+
+		
+	}
 }

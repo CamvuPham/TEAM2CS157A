@@ -210,7 +210,7 @@ public class StoreGUI extends JFrame {
 
 		return panel;
 	}
-
+	
 	/*
 	 * Menu for employee types to add fruit types of fruit
 	 */
@@ -318,7 +318,7 @@ public class StoreGUI extends JFrame {
 		panel.add(passLabel);
 		panel.add(tfpCreateUser);
 
-		this.submitCreateUser = new JButton("Submit");
+		this.submitCreateUser = new JButton("Create Account");
 
 		panel.add(submitCreateUser);
 
@@ -347,7 +347,7 @@ public class StoreGUI extends JFrame {
 		panel.add(passLabel);
 		panel.add(tfpLoginUser);
 
-		submitLoginUser = new JButton("Submit");
+		submitLoginUser = new JButton("Login");
 
 		panel.add(submitLoginUser);
 		return panel;
