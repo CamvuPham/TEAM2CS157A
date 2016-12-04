@@ -97,7 +97,12 @@ public class StoreModel {
 					+ "AFTER INSERT ON Orders FOR EACH ROW BEGIN "
 					+ "INSERT INTO Archive(oID,uID,oTimeStamp,oTotalPrice) VALUES(NEW.oID,NEW.uID,NEW.tStamp,NEW.totalPrice); "
 					+ "END;");
-
+			stmt.execute("DROP TRIGGER IF EXISTS deleteUserTrigger");
+			stmt.execute("CREATE TRIGGER deleteUserTrigger "
+					+ "BEFORE DELETE ON User FOR EACH ROW "
+					+ "BEGIN "
+					+ "DELETE FROM Orders WHERE OLD.uID = uID; "
+					+ "END;");
 			sc.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
