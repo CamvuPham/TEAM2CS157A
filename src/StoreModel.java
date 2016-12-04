@@ -103,15 +103,10 @@ public class StoreModel {
 					+ "BEGIN "
 					+ "DELETE FROM Orders WHERE OLD.uID = uID; "
 					+ "END;");
-			
-			stmt.execute("DROP TRIGGER IF EXISTS OrderItemTrigger");
-			stmt.execute("CREATE TRIGGER OrderItemTrigger "
-					+ "AFTER INSERT ON OrderItem FOR EACH ROW BEGIN "
-					+ "UPDATE Inventory SET Inventory.amount = Inventory.amount - OrderItem.amount WHERE Inventory.fID = OrderItem.fID and MIN(expirationDate) = exprirationDate; "
-					+ "END;");
+		
 
 			stmt.execute("DROP TRIGGER IF EXISTS OrderItemTrigger");
-			 			stmt.execute("CREATE TRIGGER OrderItemTrigger "
+			stmt.execute("CREATE TRIGGER OrderItemTrigger "
 			 					+ "AFTER INSERT ON OrderItem FOR EACH ROW BEGIN "
 			 					+ "UPDATE Inventory SET Inventory.amount = Inventory.amount - OrderItem.amount WHERE Inventory.fID = OrderItem.fID and MIN(expirationDate) = exprirationDate; "
 			 					+ "END;");
