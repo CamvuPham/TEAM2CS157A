@@ -60,6 +60,8 @@ public class StoreGUI extends JFrame {
 	
 	//inventory
 	JLabel inv;
+	
+	
 	/*
 	 * Constructor
 	 * 
@@ -94,7 +96,10 @@ public class StoreGUI extends JFrame {
 		right.add(inv);
 		JPanel addFruit = addFruitPanel();
 		left.add(addFruit);
+				
 		JPanel addInv = addInventoryPanel();
+		fruitSelectionaddInv = new JComboBox<String>(toStringArray(listOfFruit));
+		addInv.add(fruitSelectionaddInv);
 		left.add(addInv);
 		
 		panels.put("createUser",createUser);
@@ -123,7 +128,10 @@ public class StoreGUI extends JFrame {
 		}
 		this.listOfFruit = listOfFruitStore;
 		this.inventory = inventory;
-		
+	}
+	
+	public void updateFruitCombo(String s){
+		fruitSelectionaddInv.addItem(s);		
 	}
 
 	/**
@@ -131,14 +139,13 @@ public class StoreGUI extends JFrame {
 	 * 
 	 * @param list
 	 * */
-	public String[] toStringArray(ArrayList list) {
-		String arrlist[] = new String[list.size()];
-
-		for (int i = 0; i < list.size(); i++) {
-			arrlist[i] = list.get(i).toString();
+	public String[] toStringArray(ArrayList listOfFruit) {
+		String[] listOfFruitStore = new String[listOfFruit.size()];
+		for(int i = 0; i<listOfFruit.size();i++){
+			HashMap<String, String> fruit = (HashMap)listOfFruit.get(i);
+			listOfFruitStore[i] = fruit.get("Name"); 
 		}
-
-		return arrlist;
+		return listOfFruitStore;
 	}
 
 	/*
@@ -224,12 +231,11 @@ public class StoreGUI extends JFrame {
 		Label expLabel = new Label("Expiration Date: ");
 		Label amountLabel = new Label("Amount: ");
 
-		fruitSelectionaddInv = new JComboBox<String>(listOfFruit);
 		this.tfeaddInv = new TextField(10);
 		this.tfaaddInv = new TextField(10);
 
 		
-		panel.add(fruitSelectionaddInv);
+		//panel.add(fruitSelectionaddInv);
 		panel.add(expLabel);
 		panel.add(tfeaddInv);
 

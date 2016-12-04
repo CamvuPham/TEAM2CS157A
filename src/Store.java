@@ -126,6 +126,7 @@ public class Store {
 		
 		model.addFruit(name, price);
 		view.updateValues(model.getListOfFruit(), model.getInventory());
+		view.updateFruitCombo(view.tfnaddFruit.getText());
 		System.out.println(model.getListOfFruit());
 		
 	}
