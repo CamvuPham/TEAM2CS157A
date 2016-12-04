@@ -570,8 +570,37 @@ public class StoreModel {
 
 	/*
 	 * */
-	public void getStat() {
-
+	public void getMostPopularFruit() {
+		
+		try {
+			stmt.execute("SELECT name, COUNT(OrderItem.fID) FROM "
+					+ "Fruit JOIN OrderItem "
+					+ "GROUP BY name " 
+					+ "ORDER BY COUNT(OrderItem.fID) DESC"
+					+ "LIMIT 1;");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
+	}
+	
+	public void getNumberOfOrders(){
+		try {
+			stmt.execute("SELECT COUNT(*) FROM Orders");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void getAVGtotalPrice(){
+		try {
+			stmt.execute("SELECT AVG(totalPrice) FROM Orders");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }
