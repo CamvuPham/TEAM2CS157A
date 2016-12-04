@@ -9,7 +9,7 @@ public class Tester {
 	
 	//Credentials for Database
 	public static final String USER = "root";
-	public static final String PASSWORD = "!@)59380";
+	public static final String PASSWORD = "";
 	
 	
 	public static void main(String args[]){
@@ -17,7 +17,7 @@ public class Tester {
 			
 			//testing create a user, will check if user already exists in database and print to console
 			test.createUser("bridgegade", "!@)59380", "test");
-			test.editUser("dasd", "sda", "emdsa", 1, 1);
+
 			//testing getting uID by inputting 
 			System.out.println(test.getUser("dasd","sda"));
 			

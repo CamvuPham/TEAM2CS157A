@@ -97,6 +97,12 @@ public class StoreModel {
 					+ "AFTER INSERT ON Orders FOR EACH ROW BEGIN "
 					+ "INSERT INTO Archive(oID,uID,oTimeStamp,oTotalPrice) VALUES(NEW.oID,NEW.uID,NEW.tStamp,NEW.totalPrice); "
 					+ "END;");
+			
+			stmt.execute("DROP TRIGGER IF EXISTS OrderItemTrigger");
+			stmt.execute("CREATE TRIGGER OrderItemTrigger "
+					+ "AFTER INSERT ON OrderItem FOR EACH ROW BEGIN "
+					+ "UPDATE Inventory SET Inventory.amount = Inventory.amount - OrderItem.amount WHERE Inventory.fID = OrderItem.fID and MIN(expirationDate) = exprirationDate; "
+					+ "END;");
 
 			sc.close();
 		} catch (FileNotFoundException e) {

@@ -25,6 +25,7 @@ public class Store {
 				  getUser();
 			  }
 		});
+		
 		view.submitCreateUser.addActionListener(new ActionListener()
 		{
 			  public void actionPerformed(ActionEvent e)
@@ -49,12 +50,15 @@ public class Store {
 				  addInventory();
 			  }
 		});
+		
+		/*
 		view.tforderItem.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e)
 			  {
 				  addInventory();
 			  }
 		});
+		*/
 
 	}
 	
