@@ -22,7 +22,12 @@ public class StoreGUI extends JFrame {
 	ArrayList inventory;
 
 	ArrayList<JPanel> panels;
+	//Create Login Panel
+	TextField tfuLoginUser;
+	TextField tfpLoginUser;
+	JButton submitLoginUser;
 
+	
 	// Create User Panel
 	TextField tfuCreateUser;
 	TextField tfeCreateUser;
@@ -61,11 +66,17 @@ public class StoreGUI extends JFrame {
 		JPanel inventoryPanel = new inventoryPanel();
 		JPanel addInventoryPanel = new addInventoryPanel();
 		JPanel createUserPanel = new createUserPanel();
+		JPanel loginUserPanel = new createLoginPanel();
+		//JPanel orderPanel = new makeOrderPanel();
+		//JPanel orderItemPanel = new orderItemPanel();
 		
 		this.add(addFruitPanel);
 		this.add(inventoryPanel);
 		this.add(addInventoryPanel);
 		this.add(createUserPanel);
+		this.add(loginUserPanel);
+		//this.add(orderPanel);
+		//this.add(orderItemPanel);
 
 		setLayout(new FlowLayout());
 		setTitle("Fruit Store");
@@ -112,7 +123,7 @@ public class StoreGUI extends JFrame {
 		addButton = new JButton("+");
 
 		JButton button = new JButton("Order");
-
+		
 		this.add(titleLabel);
 		this.add(addButton);
 		this.add(button);
@@ -297,6 +308,32 @@ public class StoreGUI extends JFrame {
 		submitCreateUser = new JButton("Submit");
 
 		this.add(submitCreateUser);
+		}
+	}
+	/*
+	 * 
+	 * */
+	public class createLoginPanel extends JPanel {
+
+		public createLoginPanel(){
+		this.setLayout(new GridLayout(4, 2));
+
+		Label userLabel = new Label("Username: ");
+		Label passLabel = new Label("Password: ");
+
+		tfuLoginUser = new TextField(10);
+		tfpLoginUser = new TextField(10);
+
+		this.add(userLabel);
+		this.add(tfuLoginUser);
+
+
+		this.add(passLabel);
+		this.add(tfpLoginUser);
+
+		submitLoginUser = new JButton("Submit");
+
+		this.add(submitLoginUser);
 		}
 	}
 

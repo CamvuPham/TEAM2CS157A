@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.swing.JPanel;
 
@@ -11,12 +12,19 @@ public class Store {
 	
 	StoreGUI view;
 	StoreModel model;
-	
+	int currentUserId;
 	public Store(StoreGUI view, StoreModel model){
 		
 		this.view = view;
 		this.model = model;
 		
+		view.submitLoginUser.addActionListener(new ActionListener()
+		{
+			  public void actionPerformed(ActionEvent e)
+			  {
+				  getUser();
+			  }
+		});
 		view.submitCreateUser.addActionListener(new ActionListener()
 		{
 			  public void actionPerformed(ActionEvent e)
@@ -41,6 +49,12 @@ public class Store {
 				  addInventory();
 			  }
 		});
+		view.tforderItem.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e)
+			  {
+				  addInventory();
+			  }
+		});
 
 	}
 	
@@ -55,7 +69,8 @@ public class Store {
 		  
 		  model.createUser(username, password, email);
 		  
-		  System.out.println(model.getUser(username));
+		  System.out.println(model.getUser(username,password));
+		  System.out.println("test currentUserId = "+ currentUserId);
 	      
 	}
 	
@@ -69,7 +84,12 @@ public class Store {
 	/*
 	 * */
 	public void getUser(){
-		
+		String username = view.tfuLoginUser.getText();
+		  String password = view.tfpLoginUser.getText();
+		  
+		  HashMap<String, Integer> user = (HashMap)model.getUser(username,password).get(0);
+		  System.out.println("Successfully logged in. uID = "+user.get("uID")+" and username = "+user.get("username"));
+		  currentUserId=user.get("uID");
 	}
 	
 	/*

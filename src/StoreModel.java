@@ -92,9 +92,17 @@ public class StoreModel {
 					i += sc.nextLine() + "";
 				}
 			}
+			stmt.execute("DROP TRIGGER IF EXISTS AddToArchive");
+			stmt.execute("CREATE TRIGGER AddToArchive "
+					+ "AFTER INSERT ON Orders FOR EACH ROW BEGIN "
+					+ "INSERT INTO Archive(oID,uID,oTimeStamp,oTotalPrice) VALUES(NEW.oID,NEW.uID,NEW.tStamp,NEW.totalPrice); "
+					+ "END;");
 
 			sc.close();
 		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -174,19 +182,21 @@ public class StoreModel {
 
 	/**
 	 * Gets an array that contains a map to each attribute of the user specified
-	 * by username
+	 * by username and password. Used for logging in.
 	 * 
 	 * @param username
-	 * @return
+	 * @return returns an array of the selected user's attributes
 	 */
-	public ArrayList getUser(String username) {
-		String sql = "SELECT * FROM User WHERE username = ?";
+	public ArrayList getUser(String username, String password) {
+		String sql = "SELECT * FROM User WHERE username = ? AND password = ?";
 		ResultSet result = null;
 
 		try {
 
 			preparedStatement = conn.prepareStatement(sql);
 			preparedStatement.setString(1, username);
+			preparedStatement.setString(2, password);
+
 			result = preparedStatement.executeQuery();
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
@@ -532,7 +542,7 @@ public class StoreModel {
 		}
 		return listResult;
 	}
-
+	
 	/*
 	 * 
 	 * */

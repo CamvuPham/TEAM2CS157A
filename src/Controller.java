@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Controller {
    
-   StoreModel model = new StoreModel();
+   StoreModel model = new StoreModel(null, null);
     
     public void createUser(String username, String password, String email) {
         model.createUser(username, password, email);
@@ -16,8 +16,8 @@ public class Controller {
     }
     
 
-    public void getUser(String username) {
-        model.getUser(username);
+    public void getUser(String username, String password) {
+        model.getUser(username,password);
     }
     
 
