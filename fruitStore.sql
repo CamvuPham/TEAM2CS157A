@@ -82,16 +82,6 @@ CREATE VIEW orderView AS
 		JOIN fruit ON fruit.fID = OrderItem.fID
 ORDER BY user.usernameName ASC, fruit.Name ASC;
 
-DROP TRIGGER IF EXISTS deleteUser;
-DELIMITER //
-CREATE TRIGGER deleteUser
-BEFORE DELETE ON User FOR EACH ROW
-BEGIN
-	DELETE FROM friend WHERE old.UserID = UserID;
-	DELETE FROM friend WHERE old.UserID = FriendID;
-END //
-DELIMITER ;
-
 DROP PROCEDURE IF EXISTS getAllUsers;
 DELIMITER //
 CREATE PROCEDURE getAllUsers ()
@@ -103,8 +93,8 @@ DELIMITER ;
 -- DROP TRIGGER IF EXISTS setEmployee ??? ;
 
 DROP TRIGGER IF EXISTS deleteUserTrigger;
-DELIMITER //
-CREATE TRIGGER deleteUserTrigger
+	DELIMITER //
+	CREATE TRIGGER deleteUserTrigger
 	BEFORE DELETE ON user FOR EACH ROW
 	BEGIN
 		DELETE FROM Order WHERE old.uID = uID;
