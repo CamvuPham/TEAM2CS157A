@@ -1,4 +1,6 @@
+import java.awt.BorderLayout;
 import java.awt.Button;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Frame;
 import java.awt.GridLayout;
@@ -8,8 +10,8 @@ import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Arrays;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -22,12 +24,11 @@ public class StoreGUI extends JFrame {
 	ArrayList inventory;
 
 	ArrayList<JPanel> panels;
-	//Create Login Panel
+	// Login User Panel
 	TextField tfuLoginUser;
 	TextField tfpLoginUser;
 	JButton submitLoginUser;
 
-	
 	// Create User Panel
 	TextField tfuCreateUser;
 	TextField tfeCreateUser;
@@ -51,40 +52,47 @@ public class StoreGUI extends JFrame {
 	JButton submitaddInv;
 	JComboBox<String> fruitSelectionaddInv;
 
-	/**
+	/*
 	 * Constructor
 	 * 
 	 * @param listOfFruit array of fruit to be included in drop down menu
 	 */
 	public StoreGUI(ArrayList inventory, ArrayList listOfFruit) {
-
+		
 		this.listOfFruit = toStringArray(listOfFruit);
 		this.inventory = inventory;
-		panels = new ArrayList<JPanel>();
 		
-		JPanel addFruitPanel = new addFruitPanel();
-		JPanel inventoryPanel = new inventoryPanel();
-		JPanel addInventoryPanel = new addInventoryPanel();
-		JPanel createUserPanel = new createUserPanel();
-		JPanel loginUserPanel = new createLoginPanel();
-		//JPanel orderPanel = new makeOrderPanel();
-		//JPanel orderItemPanel = new orderItemPanel();
+		JFrame frame = new JFrame();
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		this.add(addFruitPanel);
-		this.add(inventoryPanel);
-		this.add(addInventoryPanel);
-		this.add(createUserPanel);
-		this.add(loginUserPanel);
-		//this.add(orderPanel);
-		//this.add(orderItemPanel);
-
-		setLayout(new FlowLayout());
+		frame.setLayout(new FlowLayout());
+		JPanel left = new JPanel();
+		JPanel right = new JPanel();
+		
+		left.setLayout(new GridLayout(4,4));
+		//JPanel makeOrder = makeOrderPanel();
+		//add(makeOrder);
+		
+		JPanel createUser = createUserPanel();
+		left.add(createUser);
+		left.add(createLoginPanel());
+		JPanel inv = inventoryPanel(inventory);
+		right.add(inv);
+		JPanel addFruit = addFruitPanel();
+		left.add(addFruit);
+		JPanel addInv = addInventoryPanel();
+		left.add(addInv);
+		
+		
+		frame.add(left);
+		frame.add(right);
 		setTitle("Fruit Store");
-		setSize(350, 700);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setVisible(true);
+		setSize(700, 700);
+	    //setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+	    frame.pack();
+	    frame.setVisible(true);
 	}
-	
 	/**/
 	public void updateValues(ArrayList listOfFruit, ArrayList inventory) {
 
@@ -107,145 +115,141 @@ public class StoreGUI extends JFrame {
 
 		return arrlist;
 	}
-	
-	/**
+
+	/*
 	 * Main panel for add to order menu
 	 * 
 	 * @return JPanel of main order menu
 	 */
-	public class makeOrderPanel extends JPanel  {
+	public JPanel makeOrderPanel() {
 
-		public makeOrderPanel(){
-		this.setLayout(new FlowLayout());
-
+		JPanel panel = new JPanel();
+		panel.setLayout(new FlowLayout());
+		panel.setBorder(BorderFactory.createBevelBorder(0));
 		Label titleLabel = new Label("Place an order");
-
-		addButton = new JButton("+");
-
+		this.addButton = new JButton("+");
 		JButton button = new JButton("Order");
-		
-		this.add(titleLabel);
-		this.add(addButton);
-		this.add(button);
 
-		}
+		panel.add(titleLabel);
+		panel.add(addButton);
+		panel.add(button);
+		panel.add(orderItemPanel());
+
+		return panel;
 
 	}
 
-	/**
+	/*
 	 * Displays a menu to add fruit to order
 	 * 
 	 * @return JPanel of add to order menu
 	 */
-	public class orderItemPanel extends JPanel  {
-		
-		public orderItemPanel(){
-		this.setLayout(new FlowLayout());
+	public JPanel orderItemPanel() {
 
+		JPanel panel = new JPanel();
+		panel.setLayout(new FlowLayout());
+		panel.setBorder(BorderFactory.createBevelBorder(0));
 		Label amountLabel = new Label("Amount: ");
 		Label fruitLabel = new Label("Fruit: ");
 
-		tforderItem = new TextField(10);
+		this.tforderItem = new TextField(10);
+		add(tforderItem);
 
 		JComboBox<String> fruitSelection = new JComboBox<String>(listOfFruit);
 
-		this.add(fruitLabel);
-		this.add(fruitSelection);
+		panel.add(fruitLabel);
+		panel.add(fruitSelection);
 
-		this.add(amountLabel);
-		this.add(tforderItem);
-		
-		}
+		panel.add(amountLabel);
+		panel.add(tforderItem);
 
+		return panel;
 	}
 
-	/**
+	/*
 	 * Displays the amount of fruit in stock
 	 * 
 	 */
-	public class inventoryPanel extends JPanel {
-
-		public inventoryPanel() {
-
-			this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-
-			for (int i = 0; inventory.size() > i; i++) {
-				this.add(new Label(inventory.get(i).toString()));
-			}
-
+	public JPanel inventoryPanel(ArrayList inventory) {
+		JPanel panel = new JPanel();
+		panel.setBorder(BorderFactory.createBevelBorder(0));
+		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+		Label amountLabel = new Label("Inventory");
+		for (int i = 0; inventory.size() > i; i++) {
+			panel.add(new Label(inventory.get(i).toString()));
 		}
+
+		return panel;
 	}
 
-	public class addInventoryPanel extends JPanel {
-		
-		public addInventoryPanel(){
-		this.setLayout(new GridLayout(4, 2));
+	public JPanel addInventoryPanel() {
+		JPanel panel = new JPanel();
 
-		Label nameLabel = new Label("Fruit: ");
+		panel.setLayout(new GridLayout(4, 1));
+		panel.setBorder(BorderFactory.createBevelBorder(0));
+		Label nameLabel = new Label("Fruit name: ");
 		Label expLabel = new Label("Expiration Date: ");
 		Label amountLabel = new Label("Amount: ");
 
-		fruitSelectionaddInv = new JComboBox<String>(listOfFruit);
-		tfeaddInv = new TextField(10);
-		tfaaddInv = new TextField(10);
+		this.tfnaddInv = new TextField(10);
+		this.tfeaddInv = new TextField(10);
+		this.tfaaddInv = new TextField(10);
 
-		this.add(nameLabel);
-		this.add(fruitSelectionaddInv);
+		panel.add(nameLabel);
+		panel.add(tfnaddInv);
 
-		this.add(expLabel);
-		this.add(tfeaddInv);
+		panel.add(expLabel);
+		panel.add(tfeaddInv);
 
-		this.add(amountLabel);
-		this.add(tfaaddInv);
+		panel.add(amountLabel);
+		panel.add(tfaaddInv);
 
-		submitaddInv = new JButton("Submit");
+		submitaddInv = new JButton("Add Fruit to Inventory");
 
-		this.add(submitaddInv);
-		}
+		panel.add(submitaddInv);
 
+		return panel;
 	}
 
 	/*
 	 * Menu for employee types to add fruit types of fruit
 	 */
 
-	public class addFruitPanel extends JPanel {
-		
-		public addFruitPanel(){
-		
-		this.setLayout(new GridLayout(3, 2));
-
+	public JPanel addFruitPanel() {
+		JPanel panel = new JPanel();
+		panel.setLayout(new GridLayout(4, 1));
+		panel.setBorder(BorderFactory.createBevelBorder(0));
 		Label nameLabel = new Label("Fruit name: ");
 		Label priceLabel = new Label("Price: ");
 
-		tfnaddFruit = new TextField(10);
-		tfpaddFruit = new TextField(10);
+		this.tfnaddFruit = new TextField(10);
+		this.tfpaddFruit = new TextField(10);
 
-		this.add(nameLabel);
-		this.add(tfnaddFruit);
+		panel.add(nameLabel);
+		panel.add(tfnaddFruit);
 
-		this.add(priceLabel);
-		this.add(tfpaddFruit);
+		panel.add(priceLabel);
+		panel.add(tfpaddFruit);
 
-		submitaddFruit = new JButton("Submit");
+		submitaddFruit = new JButton("Add Fruit");
 
-		this.add(submitaddFruit);
+		panel.add(submitaddFruit);
 
-		}
+		return panel;
 	}
 
 	/*
 	 * Menu for employee types to remove fruit from inventory
 	 */
-	public class removeFruitPanel extends JPanel {
-		
-		removeFruitPanel(){
+	public JPanel removeFruitPanel() {
+		JPanel panel = new JPanel();
+
 		JComboBox<String> fruitSelection = new JComboBox<String>(listOfFruit);
 
 		JButton remove = new JButton("Remove");
-		this.add(remove);
-		}
+		panel.add(remove);
 
+		return panel;
 	}
 
 	/*
@@ -253,70 +257,83 @@ public class StoreGUI extends JFrame {
 	 * 
 	 * 
 	 */
-	public class addRatingPanel extends JPanel  {
+	public JPanel addRatingPanel() {
+		JPanel panel = new JPanel();
 
+		return panel;
 	}
 
 	/*
 	 * Edit / delete a rating
 	 */
-	public class editRatingPanel  extends JPanel  {
+	public JPanel editRatingPanel() {
+		JPanel panel = new JPanel();
 
+		return panel;
 	}
 
 	/*
 	 * Displays statistics of the store
 	 * 
 	 */
-	public class statPanel extends JPanel {
+	public JPanel statPanel() {
+		JPanel panel = new JPanel();
 
+		return panel;
 	}
 
 	/*
 	 * Displays past order and menu to edit order
 	 * 
 	 */
-	public class pastOrderPanel extends JPanel  {
+	public JPanel pastOrderPanel() {
+		JPanel panel = new JPanel();
 
+		return panel;
 	}
 
 	/*
 	 * 
 	 * */
-	public class createUserPanel extends JPanel {
+	public JPanel createUserPanel() {
 
-		public createUserPanel(){
-		this.setLayout(new GridLayout(4, 2));
+		JPanel panel = new JPanel();
 
+		panel.setLayout(new GridLayout(4, 1));
+		panel.setBorder(BorderFactory.createBevelBorder(0));
 		Label userLabel = new Label("Username: ");
 		Label emailLabel = new Label("Email: ");
 		Label passLabel = new Label("Password: ");
 
-		tfuCreateUser = new TextField(10);
-		tfeCreateUser = new TextField(10);
-		tfpCreateUser = new TextField(10);
+		this.tfuCreateUser = new TextField(10);
+		this.tfeCreateUser = new TextField(10);
+		this.tfpCreateUser = new TextField(10);
 
-		this.add(userLabel);
-		this.add(tfuCreateUser);
+		panel.add(userLabel);
+		panel.add(tfuCreateUser);
 
-		this.add(emailLabel);
-		this.add(tfeCreateUser);
+		panel.add(emailLabel);
+		panel.add(tfeCreateUser);
 
-		this.add(passLabel);
-		this.add(tfpCreateUser);
+		panel.add(passLabel);
+		panel.add(tfpCreateUser);
 
-		submitCreateUser = new JButton("Submit");
+		this.submitCreateUser = new JButton("Submit");
 
-		this.add(submitCreateUser);
-		}
+		panel.add(submitCreateUser);
+
+		return panel;
+
 	}
+
 	/*
 	 * 
 	 * */
-	public class createLoginPanel extends JPanel {
 
-		public createLoginPanel(){
-		this.setLayout(new GridLayout(4, 2));
+	public JPanel createLoginPanel() {
+		JPanel panel = new JPanel();
+
+		panel.setLayout(new GridLayout(4, 2));
 
 		Label userLabel = new Label("Username: ");
 		Label passLabel = new Label("Password: ");
@@ -324,17 +341,16 @@ public class StoreGUI extends JFrame {
 		tfuLoginUser = new TextField(10);
 		tfpLoginUser = new TextField(10);
 
-		this.add(userLabel);
-		this.add(tfuLoginUser);
+		panel.add(userLabel);
+		panel.add(tfuLoginUser);
 
-
-		this.add(passLabel);
-		this.add(tfpLoginUser);
+		panel.add(passLabel);
+		panel.add(tfpLoginUser);
 
 		submitLoginUser = new JButton("Submit");
 
-		this.add(submitLoginUser);
-		}
+		panel.add(submitLoginUser);
+		return panel;
 	}
 
 }

@@ -4,3 +4,14 @@
 /Store$4.class
 /StoreGUI$createLoginPanel.class
 /Store$5.class
+/StoreGUI$addFruitPanel.class
+/StoreGUI$addInventoryPanel.class
+/StoreGUI$addRatingPanel.class
+/StoreGUI$createUserPanel.class
+/StoreGUI$editRatingPanel.class
+/StoreGUI$inventoryPanel.class
+/StoreGUI$makeOrderPanel.class
+/StoreGUI$orderItemPanel.class
+/StoreGUI$pastOrderPanel.class
+/StoreGUI$removeFruitPanel.class
+/StoreGUI$statPanel.class
