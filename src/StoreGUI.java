@@ -10,6 +10,7 @@ import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -59,7 +60,13 @@ public class StoreGUI extends JFrame {
 	 */
 	public StoreGUI(ArrayList inventory, ArrayList listOfFruit) {
 		
-		this.listOfFruit = toStringArray(listOfFruit);
+		//this.listOfFruit = toStringArray(listOfFruit);
+		String[] listOfFruitStore = new String[listOfFruit.size()];
+		for(int i = 0; i<listOfFruit.size();i++){
+			HashMap<String, String> fruit = (HashMap)listOfFruit.get(i);
+			listOfFruitStore[i] = fruit.get("Name"); 
+		}
+		this.listOfFruit = listOfFruitStore;
 		this.inventory = inventory;
 		
 		JFrame frame = new JFrame();
@@ -96,7 +103,13 @@ public class StoreGUI extends JFrame {
 	/**/
 	public void updateValues(ArrayList listOfFruit, ArrayList inventory) {
 
-		this.listOfFruit = toStringArray(listOfFruit);
+		//this.listOfFruit = toStringArray(listOfFruit);
+		String[] listOfFruitStore = new String[listOfFruit.size()];
+		for(int i = 0; i<listOfFruit.size();i++){
+			HashMap<String, String> fruit = (HashMap)listOfFruit.get(i);
+			listOfFruitStore[i] = fruit.get("Name"); 
+		}
+		this.listOfFruit = listOfFruitStore;
 		this.inventory = inventory;
 		
 	}
@@ -191,13 +204,12 @@ public class StoreGUI extends JFrame {
 		Label expLabel = new Label("Expiration Date: ");
 		Label amountLabel = new Label("Amount: ");
 
-		this.tfnaddInv = new TextField(10);
+		fruitSelectionaddInv = new JComboBox<String>(listOfFruit);
 		this.tfeaddInv = new TextField(10);
 		this.tfaaddInv = new TextField(10);
 
-		panel.add(nameLabel);
-		panel.add(tfnaddInv);
-
+		
+		panel.add(fruitSelectionaddInv);
 		panel.add(expLabel);
 		panel.add(tfeaddInv);
 

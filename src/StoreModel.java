@@ -646,7 +646,7 @@ public class StoreModel {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return Integer.parseInt((String) listResult.get(0).get("fID"));
+		return (int) listResult.get(0).get("fID");
 
 		
 	}

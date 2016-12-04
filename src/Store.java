@@ -180,8 +180,9 @@ public class Store {
 		String name = view.fruitSelectionaddInv.getSelectedItem().toString();
 		String expirationDate = view.tfeaddInv.getText();
 		int amount = Integer.parseInt(view.tfaaddInv.getText());
+		System.out.println("selected item name = "+name);
 		
-		model.addInventory(0, expirationDate, amount);
+		model.addInventory(model.getFruit(name), expirationDate, amount);
 		view.updateValues(model.getListOfFruit(), model.getInventory());
 		System.out.println(model.getInventory());
 		System.out.println(name);
