@@ -12,7 +12,7 @@ public class Store {
 	
 	StoreGUI view;
 	StoreModel model;
-	int currentUserId;
+	int currentUserId=1;
 	public Store(StoreGUI view, StoreModel model){
 		
 		this.view = view;
@@ -59,6 +59,15 @@ public class Store {
 			  }
 		});
 		*/
+		
+		view.submitaddRvw.addActionListener(new ActionListener()
+		{
+			  public void actionPerformed(ActionEvent e)
+			  {
+				  addReview();
+			  }
+		});
+		
 
 	}
 	
@@ -153,8 +162,13 @@ public class Store {
 	/*
 	 * 
 	 * */
+	// Camvuuuuuuuuuuuuuuuuuuuuuuuuuuuu
 	public void addReview(){
-		
+		String comment = view.tfcaddRvw.getText();
+		int rating = Integer.parseInt(view.fruitSelectionaddRate.getSelectedItem().toString());
+		String fruitName = view.fruitSelectionaddRvw.getSelectedItem().toString();
+		model.addReview(model.getFruit(fruitName), currentUserId, rating, comment);
+		//System.out.println(model.getListOfFruit());
 	}
 	
 	/*

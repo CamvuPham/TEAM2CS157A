@@ -1,3 +1,5 @@
+
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.sql.Connection;
@@ -28,7 +30,7 @@ public class StoreModel {
 		try {
 
 			// Open Connection
-			conn = DriverManager.getConnection(URL, USER, PASS);
+			conn = DriverManager.getConnection(URL+ "?autoReconnect=true&useSSL=false", USER, PASS);
 
 			stmt = conn.createStatement();
 			preparedStatement = null;
@@ -43,6 +45,15 @@ public class StoreModel {
 
 	}
 
+	public void resetDB(){
+		try {
+			stmt.executeUpdate("DROP DATABASE FRUITSTORE");
+			addTables();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void addTables() {
 
 		/*
@@ -105,11 +116,13 @@ public class StoreModel {
 					+ "END;");
 		
 
+			
 			stmt.execute("DROP TRIGGER IF EXISTS OrderItemTrigger");
-			stmt.execute("CREATE TRIGGER OrderItemTrigger "
+			/*stmt.execute("CREATE TRIGGER OrderItemTrigger "
 			 					+ "AFTER INSERT ON OrderItem FOR EACH ROW BEGIN "
-			 					+ "UPDATE Inventory SET Inventory.amount = Inventory.amount - OrderItem.amount WHERE Inventory.fID = OrderItem.fID and MIN(expirationDate) = exprirationDate; "
+			 					+ "UPDATE Inventory SET Inventory.amount = Inventory.amount - OrderItem.amount WHERE Inventory.fID = fID and MIN(expirationDate) = exprirationDate; "
 			 					+ "END;");
+			*/
 			sc.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -251,6 +264,24 @@ public class StoreModel {
 			preparedStatement = conn.prepareStatement(sql);
 			preparedStatement.setInt(1, uID);
 			preparedStatement.setInt(2, price);
+
+			preparedStatement.executeUpdate();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void insertOrderItem(int oID, int fID, int amount) {
+		try {
+
+			String sql = "INSERT INTO OrderItem(oID, fID, amount) VALUES(?,?,?)";
+
+			preparedStatement = conn.prepareStatement(sql);
+			preparedStatement.setInt(1, oID);
+			preparedStatement.setInt(2, fID);
+			preparedStatement.setInt(3, amount);
 
 			preparedStatement.executeUpdate();
 
@@ -505,6 +536,7 @@ public class StoreModel {
 	/*
 	 * 
 	 * */
+	// Camvuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu
 	public void removeExpired() {
 		String sql = "DELETE FROM Inventory WHERE expirationDate > NOW() ";
 		ResultSet result = null;
@@ -523,7 +555,8 @@ public class StoreModel {
 	/*
 	 * 
 	 * */
-	public ArrayList getExpired() { // reuse ArrayList getInventory() code
+	// Camvuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu
+	public ArrayList getExpired() { 
 
 		String sql = "SELECT * FROM Inventory WHERE expirationDate > NOW() ";
 		ResultSet result = null;
@@ -557,11 +590,47 @@ public class StoreModel {
 	
 	/*
 	 * 
-	 * */
-	public void addReview() {
+	 * */ 
+	//***********************************************************************8
+	//Camvuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu********************************
+	public void addReview(int fID, int uID, int rating, String comment) {
+		String sql = "SELECT * FROM Review WHERE uID = ?";
+		ResultSet result = null;
+		try {
+			String s = "SET FOREIGN_KEY_CHECKS=0";
+			preparedStatement = conn.prepareStatement(sql);
+			preparedStatement.setInt(1, uID);
+			result = preparedStatement.executeQuery();
+
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		try {
+			if (!result.next()) {
+				// ResultSet is empty
+
+				sql = "INSERT INTO Review(fID, uID, rating, comment, ratingDate) VALUES(?,?,?,?,NOW())";
+
+				preparedStatement = conn.prepareStatement(sql);
+				preparedStatement.setInt(1, fID);
+				preparedStatement.setInt(2, uID);
+				preparedStatement.setInt(3, rating);
+				preparedStatement.setString(4, comment);
+				preparedStatement.executeUpdate();
+
+			} else {
+				System.out.println("User already rated this fruit.");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 
+	
 	/*
 	 * */
 	public void editReview() {
