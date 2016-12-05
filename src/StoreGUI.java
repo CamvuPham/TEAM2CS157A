@@ -11,9 +11,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
+import javax.swing.*;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -39,7 +38,6 @@ public class StoreGUI extends JFrame {
 
 	// Order Item Panel
 	TextField tforderItem;
-
 	JButton addButton;
 
 	// Add Fruit Panel
@@ -62,6 +60,13 @@ public class StoreGUI extends JFrame {
 	JLabel inv;
 	
 	
+	// Add Review Panel
+	TextField tfcaddRvw;
+	JButton submitaddRvw;
+	JComboBox<String> fruitSelectionaddRate;
+	JComboBox<String> fruitSelectionaddRvw;
+	String[] rates = {"1","2","3","4","5"};
+	//Integer[] rates = {1,2,3,4,5};
 	/*
 	 * Constructor
 	 * 
@@ -69,38 +74,61 @@ public class StoreGUI extends JFrame {
 	 */
 	public StoreGUI(ArrayList inventory, ArrayList listOfFruit) {
 		panels = new HashMap<>();
+		
 		//this.listOfFruit = toStringArray(listOfFruit);
 		String[] listOfFruitStore = new String[listOfFruit.size()];
 		for(int i = 0; i<listOfFruit.size();i++){
 			HashMap<String, String> fruit = (HashMap)listOfFruit.get(i);
 			listOfFruitStore[i] = fruit.get("Name"); 
 		}
+		
+		
 		this.listOfFruit = listOfFruitStore;
 		this.inventory = inventory;
 		
 		JFrame frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
 		frame.setLayout(new FlowLayout());
 		
 		
-		left.setLayout(new GridLayout(4,4));
+		left.setLayout(new GridLayout(8,1));
 		//JPanel makeOrder = makeOrderPanel();
 		//add(makeOrder);
 		
 		JPanel createUser = createUserPanel();
-		left.add(createUser);
+		left.add(createUserPanel());
+		left.add(new JLabel(" "));
+
 		left.add(createLoginPanel());
-		inv = new JLabel("testing");
-		updateInventory();
-		right.add(inv);
+		left.add(new JLabel(" "));
+
 		JPanel addFruit = addFruitPanel();
 		left.add(addFruit);
+		left.add(new JLabel(" "));
 				
 		JPanel addInv = addInventoryPanel();
 		fruitSelectionaddInv = new JComboBox<String>(toStringArray(listOfFruit));
 		addInv.add(fruitSelectionaddInv);
 		left.add(addInv);
+		left.add(new JLabel(" "));
+		
+		//left.add(removeFruitPanel());
+		
+		//Camvuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu
+		// Add Review Panel - add button out of the method to push it to the bottom
+		JPanel addRvw = addReviewPanel();
+		fruitSelectionaddRate = new JComboBox<String>(rates);
+		addRvw.add(fruitSelectionaddRate);
+		fruitSelectionaddRvw = new JComboBox<String>(toStringArray(listOfFruit));
+		addRvw.add(fruitSelectionaddRvw);
+		submitaddRvw = new JButton("Submit Review");
+		addRvw.add(submitaddRvw);
+		left.add(addRvw);
+				
+		// Right Panel
+		inv = new JLabel("testing");
+		updateInventory();
+		right.add(inv);
 		
 		panels.put("createUser",createUser);
 		//panels.put("inv",inv);
@@ -110,9 +138,8 @@ public class StoreGUI extends JFrame {
 		
 		frame.add(left);
 		frame.add(right);
-		setTitle("Fruit Store");
+		frame.setTitle("Fruit Store");
 		setSize(700, 700);
-	    //setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 	    frame.pack();
 	    frame.setVisible(true);
@@ -227,7 +254,7 @@ public class StoreGUI extends JFrame {
 
 		panel.setLayout(new GridLayout(4, 1));
 		panel.setBorder(BorderFactory.createBevelBorder(0));
-		Label nameLabel = new Label("Fruit name: ");
+		//Label nameLabel = new Label("Fruit name: ");
 		Label expLabel = new Label("Expiration Date: ");
 		Label amountLabel = new Label("Amount: ");
 
@@ -372,7 +399,7 @@ public class StoreGUI extends JFrame {
 		JPanel panel = new JPanel();
 
 		panel.setLayout(new GridLayout(4, 2));
-
+		panel.setBorder(BorderFactory.createBevelBorder(0));
 		Label userLabel = new Label("Username: ");
 		Label passLabel = new Label("Password: ");
 
@@ -391,4 +418,25 @@ public class StoreGUI extends JFrame {
 		return panel;
 	}
 
+	// Camvuuuuuuuuuuuuuuuuuuu
+	public JPanel addReviewPanel() {
+		JPanel panel = new JPanel();
+
+		panel.setLayout(new GridLayout(4, 1));
+		panel.setBorder(BorderFactory.createBevelBorder(0));
+		Label reviewCommentLabel = new Label("Comment:");
+		Label ratingLabel = new Label("Rating Number:");
+		Label fruitReviewLabel = new Label("Fruit to Review:");
+		
+		
+		panel.add(reviewCommentLabel);
+		this.tfcaddRvw = new TextField();
+		panel.add(tfcaddRvw);
+		
+		panel.add(ratingLabel);
+		panel.add(fruitReviewLabel);
+		return panel;
+	}
+	
+	
 }

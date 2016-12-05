@@ -9,7 +9,7 @@ public class Tester {
 	
 	//Credentials for Database
 	public static final String USER = "root";
-	public static final String PASSWORD = "";
+	public static final String PASSWORD = "aaaaaa";
 	
 	
 	public static void main(String args[]){
@@ -23,9 +23,12 @@ public class Tester {
 			
 			//testing makeOrder
 			test.makeOrder(1, 400);
-			
+		
 			test.addFruit("grape", 100);
 			test.addFruit("bananna", 500);
+			
+			//testing add Review
+			//test.addReview(3, 4, 5, "Very yummy!");
 			
 			ArrayList listOfFruit = test.getListOfFruit();
 			System.out.println(listOfFruit);
