@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS User(
 CREATE TABLE IF NOT EXISTS Fruit(
     fID INT NOT NULL AUTO_INCREMENT, 
     Name VARCHAR(100) NOT NULL UNIQUE, 
-    Price DOUBLE NOT NULL,
+    Price DOUBLE NOT NULL,  
     PRIMARY KEY (fID)
 );
 CREATE TABLE IF NOT EXISTS Review(
@@ -62,4 +62,11 @@ CREATE TABLE IF NOT EXISTS Archive(
     FOREIGN KEY (oID) REFERENCES Orders(oID),
     FOREIGN KEY (uID) REFERENCES User(uID)
 );
--- testing2, Camvu trying Github
+
+CREATE VIEW orderView AS
+	SELECT User.username, OrderItem.oiID, fruit.Name, OrderItem.amount 
+	FROM User
+		JOIN Orders ON user.uID = Orders.uID
+		JOIN orderItem ON Orders.oID = OrderItem.oID 
+		JOIN fruit ON fruit.fID = OrderItem.fID
+ORDER BY user.username ASC, fruit.Name ASC;
